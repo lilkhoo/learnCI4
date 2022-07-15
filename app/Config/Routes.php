@@ -36,14 +36,19 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Pages::index');
+$routes->get("/login", "Login::index");
 $routes->get('/pages', 'Pages::index');
 $routes->get('/pages/about', 'Pages::about');
 $routes->get('/pages/contact', 'Pages::contact');
 $routes->get('/pages/employee', 'Pegawai::index');
 
 
-// Route Generate PDF comic
-$routes->get("/comic/report-comic", "Comics::generatePDF");
+// Route Import EXCEL Employee
+// $routes->get('/employee/import', 'Pegawai::prosesExcel');
+$routes->post('/employee/import', 'Pegawai::spreadsheet_import');
+
+// // Route Generate PDF comic
+// $routes->get("/comic/report-comic", "Comics::generatePDF");
 
 // Route Generate PDF pegawai
 $routes->get("/employee/laporan-pegawai", "Pegawai::generate");

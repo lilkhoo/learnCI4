@@ -26,6 +26,7 @@
             <tr>
                <th>ID</th>
                <th>Name</th>
+               <th>Email</th>
                <th>Address</th>
             </tr>
          </thead>
@@ -35,6 +36,7 @@
                <tr>
                   <th scope="row"><?= $i++; ?></th>
                   <td><?= $p["name"]; ?></td>
+                  <td><?= $p["email"]; ?></td>
                   <td><?= $p["address"]; ?></td>
                </tr>
             <?php endforeach; ?>

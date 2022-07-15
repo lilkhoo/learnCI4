@@ -9,5 +9,11 @@ class PegawaiModel extends Model
    protected $table = "pegawai";
    protected $useTimestamps = true;
 
-   protected $allowedFields = ["name", "address"];
+   protected $allowedFields = ["name", "email", "password", "address"];
+
+
+   // public function insert_batch($data)
+   // {
+   //    $this->db->insert_batch("pegawai", $data);
+   // }
 }

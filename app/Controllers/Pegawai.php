@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\PegawaiModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PHPExcel;
+use PHPExcel_IOFactory;
 
 class Pegawai extends BaseController
 {
@@ -78,5 +80,56 @@ class Pegawai extends BaseController
       header('Cache-Control: max-age=0');
 
       $writer->save('php://output');
+   }
+
+   public function spreadsheet_import()
+   {
+      $upload_file = $_FILES['upload_file']['name'];
+      $extension = pathinfo($upload_file, PATHINFO_EXTENSION);
+      if ($extension == 'csv') {
+         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+      } elseif ($extension == 'xls') {
+         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+      } else {
+         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+      }
+
+      $spreadsheet = $reader->load($_FILES['upload_file']['tmp_name']);
+      $sheetdata = $spreadsheet->getActiveSheet()->toArray();
+
+      $sheetcount = count($sheetdata);
+      if ($sheetcount > 1) {
+
+         $data = array();
+         for ($i = 1; $i < $sheetcount; $i++) {
+            $pegawai_name = $sheetdata[$i][0];
+            $pegawai_email = $sheetdata[$i][1];
+            $pegawai_address = $sheetdata[$i][2];
+            $pegawai_password = $sheetdata[$i][3];
+            $pegawai_createdAt = $sheetdata[$i][4];
+            $pegawai_updatedAt = $sheetdata[$i][5];
+
+            $data[] = array(
+               "name" => $pegawai_name,
+               "email" => $pegawai_email,
+               "address" => $pegawai_address,
+               "password" => $pegawai_password,
+               "created_at" => $pegawai_createdAt,
+               "updated_at" => $pegawai_updatedAt
+            );
+         }
+
+         $insertdata = $this->pegawaiModel->insertBatch($data);
+
+         if ($insertdata) {
+            session()->setFlashdata("message", "AYEY");
+
+            return redirect()->to("/pages/employee");
+         } else {
+            session()->setFlashdata("message", "gagal");
+
+            return redirect()->to("/pages/employee");
+         }
+      }
    }
 }

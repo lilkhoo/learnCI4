@@ -19,6 +19,14 @@ class Pegawai extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
             ],
+            'email' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+            ],
+            'password' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+            ],
             'address' => [
                 'type' => 'VARCHAR',
                 'constraint' => "255",

@@ -35,6 +35,8 @@ class PegawaiSeeder extends Seeder
 
          $data = [
             "name" => $faker->name(),
+            "email" => $faker->email(),
+            "password" => "password",
             "address" => $faker->address(),
             "created_at" => Time::now(),
             "updated_at" => Time::now(),

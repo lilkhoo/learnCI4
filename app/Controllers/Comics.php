@@ -93,10 +93,6 @@ class Comics extends BaseController
          ],
 
       ])) {
-         // $validation = \Config\Services::validation();
-         // dd($validation);
-
-         // return redirect()->to("/pages/comic/create")->withInput()->with("validation", $validation);
          return redirect()->to("/pages/comic/create")->withInput();
       }
       // Ambil Gambar untuk di input kedalam database
